@@ -68,6 +68,8 @@
 // });
 
 window.addEventListener('load', () => {
+
+    const isMobile = window.innerWidth <= 1024;
     const feed = document.getElementById('feed');
     const items = Array.from(feed.children);
 
@@ -91,8 +93,10 @@ window.addEventListener('load', () => {
         item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
 
         // detectar hover
-        item.addEventListener('mouseenter', () => { isHovered = true; });
-        item.addEventListener('mouseleave', () => { isHovered = false; });
+        if (!isMobile) {
+            item.addEventListener('mouseenter', () => { isHovered = true; });
+            item.addEventListener('mouseleave', () => { isHovered = false; });
+        }
 
         // función de animación recursiva
         function animate() {
@@ -134,10 +138,12 @@ window.addEventListener('load', () => {
     //         listItems.forEach(p => p.classList.remove('is-active'));
     //     });
     // });
-    const listItems = Array.from(document.querySelectorAll('#feed p'));
+    // const listItems = Array.from(document.querySelectorAll('#feed p'));
     const categories = Array.from(document.querySelectorAll('#cat p'));
 
     items.forEach(item => {
+
+        if (isMobile) return;
 
         item.addEventListener('mouseenter', function () {
             this.querySelector('p').classList.add('is-active');

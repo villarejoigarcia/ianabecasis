@@ -10,6 +10,7 @@ body {
     background-color: white;
     /* letter-spacing: -.02em; */
     cursor: crosshair;
+    overflow: hidden;
 }
 
 * {
@@ -84,7 +85,8 @@ img {
     pointer-events: none;
     position: absolute;
     white-space: nowrap;
-    left: 100%;
+    /* left: 100%; */
+    left: 1em;
 }
 
 #feed p.is-active {
@@ -117,3 +119,21 @@ img {
     #list p.is-active {
         opacity: 1;
     } */
+
+@media (max-width: 1024px) {
+
+    html,
+    body {
+        font-size: 8px;
+    }
+
+    #feed p {
+        opacity: 1;
+        /* left: 1em; */
+    }
+
+    #feed>* {
+        height: 66px;
+    }
+
+}
