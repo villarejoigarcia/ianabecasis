@@ -1,0 +1,367 @@
+<link rel="stylesheet" href="https://use.typekit.net/mcf1bpp.css">
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        /* font-family: Arial; */
+        font-family: "neue-haas-grotesk-display", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+        background-color: white;
+        /* letter-spacing: -.02em; */
+        cursor: crosshair;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        all: unset;
+        /* cursor: pointer; */
+    }
+
+    header {
+        position: fixed;
+        left: 50vw;
+        top: 50vh;
+        transform: translate(-50%,-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        /* z-index: 9; */
+        /* mix-blend-mode: difference;
+        color: white; */
+    }
+
+    #cat {
+        display: flex;
+        gap: 1em;
+    }
+
+    #bio {
+        transform: translateX(-109%);
+    }
+
+    header>* {
+        width: fit-content;
+    }
+
+    #feed {
+        /* height: 100vh; */
+        /* width: 100vw; */
+        /* display: flex;
+        flex-direction: column;
+        align-items: center; */
+        padding: 2px;
+    }
+
+    img {
+        height: 100%;
+        width: auto;
+    }
+
+    /* #feed>* {
+        flex: 1;
+        width: fit-content;
+        position: relative;
+        overflow: hidden;
+        transition: opacity .5s ease;
+    } */
+
+    #feed>* {
+        height: 100px;
+        position: absolute;
+        transition: opacity .5s ease;
+    }
+
+    #feed p {
+        opacity: 0;
+        /* transform: translateX(100%); */
+        transition: opacity .5s ease;
+        pointer-events: none;
+        position: absolute;
+        white-space: nowrap;
+        left: 100%
+    }
+
+    #feed p.is-active{
+        opacity: 1;
+    }
+
+    #cat p {
+        transition: all .5s ease;
+    }
+
+    #cat p.active {
+        /* text-decoration: underline; */
+        color: rgb(200,200,200);
+        /* opacity: 0; */
+    }
+
+    /* #list p {
+        position: fixed;
+        top: 50vh;
+        left: 75vw;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    } */
+
+    /* #list p {
+        opacity: 0;
+    }
+
+    #list p.is-active {
+        opacity: 1;
+    } */
+
+</style>
+
+<!-- <script>
+    window.addEventListener('load', () => {
+        const feed = document.getElementById('feed');
+        const items = feed.children;
+
+        Array.from(items).forEach(item => {
+            const maxOffset = (feed.clientWidth - item.clientWidth) / 2;
+            const randomX = (Math.random() * maxOffset * 2) - maxOffset;
+            item.style.transform = `translateX(${randomX}px)`;
+        });
+    });
+</script> -->
+
+<!-- <script>
+    window.addEventListener('load', () => {
+        const feed = document.getElementById('feed');
+        const items = Array.from(feed.children);
+
+        const INTERVAL = 3000;      // tiempo entre cambios
+        const FADE_TIME = 500;      // debe coincidir con CSS
+
+        function randomPosition(item) {
+            const maxX = (window.innerWidth - item.clientWidth);
+            const maxY = (window.innerHeight - item.clientHeight);
+            const x = (Math.random() * maxX);
+            const y = (Math.random() * maxY);
+            return { x, y };
+        }
+
+        items.forEach(item => {
+            // posición inicial sin animación
+            const pos = randomPosition(item);
+            item.style.opacity = 1;
+            item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+
+            setInterval(() => {
+                // 1. fade out con desincronización aleatoria
+                const fadeOutDelay = Math.random() * 500;
+                setTimeout(() => {
+                    item.style.opacity = 0;
+                }, fadeOutDelay);
+
+                // 2. mover cuando ya no se ve
+                const moveDelay = FADE_TIME + Math.random() * 500;
+                setTimeout(() => {
+                    const pos = randomPosition(item);
+                    item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+
+                    // 3. fade in
+                    item.style.opacity = 1;
+                }, moveDelay);
+
+            }, INTERVAL);
+        });
+
+        const listItems = Array.from(document.querySelectorAll('#list p'));
+
+        items.forEach(item => {
+            const index = item.dataset.index;
+
+            item.addEventListener('mouseenter', () => {
+                listItems.forEach(p => p.classList.remove('is-active'));
+                const active = document.querySelector(`#list p[data-index="${index}"]`);
+                if (active) active.classList.add('is-active');
+            });
+
+            // item.addEventListener('mouseleave', () => {
+            //     listItems.forEach(p => p.classList.remove('is-active'));
+            // });
+        });
+    });
+    //
+</script> -->
+
+<script>
+    window.addEventListener('load', () => {
+        const feed = document.getElementById('feed');
+        const items = Array.from(feed.children);
+
+        const INTERVAL = 3000; // tiempo entre cambios
+        const FADE_TIME = 500; // debe coincidir con CSS
+
+        function randomPosition(item) {
+            const maxX = (window.innerWidth - item.clientWidth);
+            const maxY = (window.innerHeight - item.clientHeight);
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            return { x, y };
+        }
+
+        items.forEach(item => {
+            let isHovered = false; // flag para hover
+
+            // posición inicial
+            const pos = randomPosition(item);
+            item.style.opacity = 1;
+            item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+
+            // detectar hover
+            item.addEventListener('mouseenter', () => { isHovered = true; });
+            item.addEventListener('mouseleave', () => { isHovered = false; });
+
+            // función de animación recursiva
+            function animate() {
+                if (!isHovered) {
+                    // fade out con desincronización
+                    const fadeOutDelay = Math.random() * 500;
+                    setTimeout(() => {
+                        item.style.opacity = 0;
+                    }, fadeOutDelay);
+
+                    // mover y fade in
+                    const moveDelay = FADE_TIME + Math.random() * 500;
+                    setTimeout(() => {
+                        const pos = randomPosition(item);
+                        item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+                        item.style.opacity = 1;
+                    }, moveDelay);
+                }
+
+                // siguiente animación
+                setTimeout(animate, INTERVAL);
+            }
+
+            animate();
+        });
+
+        // const listItems = Array.from(document.querySelectorAll('#list p'));
+
+        // items.forEach(item => {
+        //     const index = item.dataset.index;
+
+        //     item.addEventListener('mouseenter', () => {
+        //         listItems.forEach(p => p.classList.remove('is-active'));
+        //         const active = document.querySelector(`#list p[data-index="${index}"]`);
+        //         if (active) active.classList.add('is-active');
+        //     });
+
+        //     item.addEventListener('mouseleave', () => {
+        //         listItems.forEach(p => p.classList.remove('is-active'));
+        //     });
+        // });
+        const listItems = Array.from(document.querySelectorAll('#feed p'));
+        const categories = Array.from(document.querySelectorAll('#cat p'));
+
+        items.forEach(item => {
+
+            item.addEventListener('mouseenter', function() {
+                this.querySelector('p').classList.add('is-active');
+                
+                categories.forEach(cat => cat.classList.remove('active'));
+                const catName = this.dataset.category;
+                const catEl = document.querySelector(`#cat p[data-category="${catName}"]`);
+                if (catEl) catEl.classList.add('active');
+            });
+
+            item.addEventListener('mouseleave', function() {
+                this.querySelector('p').classList.remove('is-active');
+                categories.forEach(cat => cat.classList.remove('active'));
+            });
+        });
+
+        // clock
+
+        // const clock = document.getElementById('clock');
+
+        // function updateClock() {
+        //     const now = new Date();
+
+        //     const hours = String(now.getHours()).padStart(2, '0');
+        //     const minutes = String(now.getMinutes()).padStart(2, '0');
+        //     const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        //     clock.textContent = `${hours}:${minutes}:${seconds}`;
+        // }
+
+        // updateClock();
+
+        // setInterval(updateClock, 1000);
+    });
+</script>
+
+<header>
+    <p>ian abecasis</p>
+    <p id="bio">film director</p>
+    <div id="cat">
+        <p data-category="social">social</p>
+        <p data-category="commercial">commercial</p>
+        <p data-category="personal">personal</p>
+        <p data-category="documentary">documentary</p>
+    </div>
+    <p id="clock" style="transform: translateX(100%);">© 2026</p>
+</header>
+
+<div id="feed">
+    <div data-category="social">
+        <img src="images/ianabecasis_1.jpg" alt="">
+        <p>emitr_2023.mp4</p>
+    </div>
+    <div data-category="social">
+        <img src="images/ianabecasis_2.jpg" alt="">
+        <p>brownie_2024.mp4</p>
+    </div>
+    <div data-category="commercial">
+        <img src="images/ianabecasis_3.jpg" alt="">
+        <p>footlocker_2025.mp4</p>
+    </div>
+    <div data-category="personal">
+        <img src="images/ianabecasis_4.jpg" alt="">
+        <p>footlocker_2024.mp4</p>
+    </div>
+    <div data-category="documentary">
+        <a href="https://www.instagram.com/p/DHB0uLSzLPx/" target="_blank"><img src="images/ianabecasis_5.jpg" alt=""></a>
+        <p>tous_2025.mp4</p>
+    </div>
+    <div data-category="personal">
+        <img src="images/ianabecasis_6.jpg" alt="">
+        <p>hugo_2023.mp4</p>
+    </div>
+    <div data-category="documentary">
+        <img src="images/ianabecasis_7.jpg" alt="">
+        <p>carolinaherrera_2022.mp4</p>
+    </div>
+    <div data-category="social">
+        <img src="images/ianabecasis_8.jpg" alt="">
+        <p>entorns_2024.mp4</p>
+    </div>
+    <div data-category="commercial">
+        <img src="images/ianabecasis_9.jpg" alt="">
+        <p>gucci_2022.mp4</p>
+    </div>
+</div>
+
+<!-- <div id="list">
+    <p data-index="1">1. Gucci</p>
+    <p data-index="2">2. Dior</p>
+    <p data-index="3">3. Foot Locker</p>
+    <p data-index="4">4. Carolina Herrera</p>
+    <p data-index="5">5. Gigi Ros</p>
+    <p data-index="6">6. Adidas</p>
+    <p data-index="7">7. Prada</p>
+    <p data-index="8">8. Balenciaga</p>
+    <p data-index="9">9. Jacquemus</p>
+</div> -->
