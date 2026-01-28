@@ -77,6 +77,16 @@ img {
     height: 100px;
     position: absolute;
     transition: opacity .5s ease;
+    opacity: 1;
+}
+
+#feed>* {
+    opacity: 1;
+}
+
+#feed>*.is-filtered {
+    opacity: .1;
+    pointer-events: none;
 }
 
 #feed p {
@@ -98,7 +108,8 @@ img {
     transition: all .5s ease;
 }
 
-#cat p.active {
+#cat p.active,
+#cat p:hover {
     /* text-decoration: underline; */
     color: rgb(200, 200, 200);
     /* opacity: 0; */

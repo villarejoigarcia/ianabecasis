@@ -1,72 +1,3 @@
-// window.addEventListener('load', () => {
-//     const feed = document.getElementById('feed');
-//     const items = feed.children;
-
-//     Array.from(items).forEach(item => {
-//         const maxOffset = (feed.clientWidth - item.clientWidth) / 2;
-//         const randomX = (Math.random() * maxOffset * 2) - maxOffset;
-//         item.style.transform = `translateX(${randomX}px)`;
-//     });
-// });
-
-// window.addEventListener('load', () => {
-//     const feed = document.getElementById('feed');
-//     const items = Array.from(feed.children);
-
-//     const INTERVAL = 3000;      // tiempo entre cambios
-//     const FADE_TIME = 500;      // debe coincidir con CSS
-
-//     function randomPosition(item) {
-//         const maxX = (window.innerWidth - item.clientWidth);
-//         const maxY = (window.innerHeight - item.clientHeight);
-//         const x = (Math.random() * maxX);
-//         const y = (Math.random() * maxY);
-//         return { x, y };
-//     }
-
-//     items.forEach(item => {
-//         // posición inicial sin animación
-//         const pos = randomPosition(item);
-//         item.style.opacity = 1;
-//         item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-
-//         setInterval(() => {
-//             // 1. fade out con desincronización aleatoria
-//             const fadeOutDelay = Math.random() * 500;
-//             setTimeout(() => {
-//                 item.style.opacity = 0;
-//             }, fadeOutDelay);
-
-//             // 2. mover cuando ya no se ve
-//             const moveDelay = FADE_TIME + Math.random() * 500;
-//             setTimeout(() => {
-//                 const pos = randomPosition(item);
-//                 item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-
-//                 // 3. fade in
-//                 item.style.opacity = 1;
-//             }, moveDelay);
-
-//         }, INTERVAL);
-//     });
-
-//     const listItems = Array.from(document.querySelectorAll('#list p'));
-
-//     items.forEach(item => {
-//         const index = item.dataset.index;
-
-//         item.addEventListener('mouseenter', () => {
-//             listItems.forEach(p => p.classList.remove('is-active'));
-//             const active = document.querySelector(`#list p[data-index="${index}"]`);
-//             if (active) active.classList.add('is-active');
-//         });
-
-//         // item.addEventListener('mouseleave', () => {
-//         //     listItems.forEach(p => p.classList.remove('is-active'));
-//         // });
-//     });
-// });
-
 window.addEventListener('load', () => {
 
     const isMobile = window.innerWidth <= 1024;
@@ -74,7 +5,7 @@ window.addEventListener('load', () => {
     const items = Array.from(feed.children);
 
     const INTERVAL = 2000; // tiempo entre cambios
-    const FADE_TIME = 250; // debe coincidir con CSS
+    const FADE_TIME = 500; // debe coincidir con CSS
 
     function randomPosition(item) {
         const maxX = (window.innerWidth - item.clientWidth);
@@ -112,7 +43,7 @@ window.addEventListener('load', () => {
                 setTimeout(() => {
                     const pos = randomPosition(item);
                     item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-                    item.style.opacity = 1;
+                    item.style.opacity = '';
                 }, moveDelay);
             }
 
@@ -156,7 +87,12 @@ window.addEventListener('load', () => {
 
         item.addEventListener('mouseleave', function () {
             this.querySelector('p').classList.remove('is-active');
-            categories.forEach(cat => cat.classList.remove('active'));
+            
+            categories.forEach(cat => {
+                // si hay una categoría activa por click, no tocarla
+                if (activeCategory) return;
+                cat.classList.remove('active');
+            });
         });
     });
 
@@ -177,4 +113,51 @@ window.addEventListener('load', () => {
     // updateClock();
 
     // setInterval(updateClock, 1000);
+
+    // Seleccionamos todas las categorías
+// const categories = document.querySelectorAll("#cat p");
+const feedItems = document.querySelectorAll("#feed > div");
+
+
+let activeCategory = null;
+
+document.addEventListener('click', (e) => {
+    // si el click viene de una categoría, no hacer nada (ya se gestiona en su handler)
+    if (e.target.closest('#cat')) return;
+
+    // desactivar filtro
+    activeCategory = null;
+
+    // limpiar estado visual de categorías
+    categories.forEach(c => c.classList.remove('active'));
+
+    // limpiar estado de items
+    feedItems.forEach(item => {
+        item.classList.remove('is-filtered');
+    });
+});
+
+categories.forEach(cat => {
+    cat.addEventListener("click", () => {
+        const selectedCategory = cat.dataset.category;
+
+        activeCategory = activeCategory === selectedCategory ? null : selectedCategory;
+
+        // reset estado visual de categorías
+        categories.forEach(c => c.classList.remove('active'));
+
+        // activar categoría clicada si hay filtro activo
+        if (activeCategory) {
+            cat.classList.add('active');
+        }
+
+        feedItems.forEach(item => {
+            item.classList.remove('is-filtered');
+
+            if (activeCategory && item.dataset.category !== activeCategory) {
+                item.classList.add('is-filtered');
+            }
+        });
+    });
+});
 });
