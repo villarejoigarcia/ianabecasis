@@ -11,6 +11,7 @@ body {
     /* letter-spacing: -.02em; */
     cursor: crosshair;
     overflow: hidden;
+    line-height: 1.125em;
 }
 
 * {

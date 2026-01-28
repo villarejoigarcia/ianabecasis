@@ -73,8 +73,8 @@ window.addEventListener('load', () => {
     const feed = document.getElementById('feed');
     const items = Array.from(feed.children);
 
-    const INTERVAL = 3000; // tiempo entre cambios
-    const FADE_TIME = 500; // debe coincidir con CSS
+    const INTERVAL = 2000; // tiempo entre cambios
+    const FADE_TIME = 250; // debe coincidir con CSS
 
     function randomPosition(item) {
         const maxX = (window.innerWidth - item.clientWidth);
