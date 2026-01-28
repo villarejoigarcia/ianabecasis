@@ -33,9 +33,9 @@ header {
     display: flex;
     flex-direction: column;
     align-items: end;
-    /* z-index: 9; */
-    /* mix-blend-mode: difference;
-        color: white; */
+    z-index: 9;
+    mix-blend-mode: difference;
+    color: white;
 }
 
 #cat {
@@ -110,14 +110,16 @@ img {
 
 #cat p.active {
     /* text-decoration: underline; */
-    color: rgb(200, 200, 200);
+    /* color: rgb(200, 200, 200); */
+    opacity: .333;
     /* opacity: 0; */
 
 }
 
 @media (min-width: 1024px) {
     #cat p:hover {
-        color: rgb(200, 200, 200);
+        /* color: rgb(200, 200, 200); */
+        opacity: .333;
 
     }
 }
