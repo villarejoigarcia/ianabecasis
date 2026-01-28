@@ -108,12 +108,18 @@ img {
     transition: all .5s ease;
 }
 
-#cat p.active,
-#cat p:hover {
+#cat p.active {
     /* text-decoration: underline; */
     color: rgb(200, 200, 200);
     /* opacity: 0; */
 
+}
+
+@media (min-width: 1024px) {
+    #cat p:hover {
+        color: rgb(200, 200, 200);
+
+    }
 }
 
 /* #list p {
