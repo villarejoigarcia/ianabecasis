@@ -51,37 +51,15 @@ header>* {
     width: fit-content;
 }
 
-#feed {
-    /* height: 100vh; */
-    /* width: 100vw; */
-    /* display: flex;
-        flex-direction: column;
-        align-items: center; */
-    padding: 2px;
-}
-
 img {
     height: 100%;
     width: auto;
 }
 
-/* #feed>* {
-        flex: 1;
-        width: fit-content;
-        position: relative;
-        overflow: hidden;
-        transition: opacity .5s ease;
-    } */
-
 #feed>* {
     height: 100px;
     position: absolute;
     transition: opacity .5s ease;
-    opacity: 1;
-}
-
-#feed>* {
-    opacity: 1;
 }
 
 #feed>*.is-filtered {
@@ -91,12 +69,10 @@ img {
 
 #feed p {
     opacity: 0;
-    /* transform: translateX(100%); */
     transition: opacity .5s ease;
     pointer-events: none;
     position: absolute;
     white-space: nowrap;
-    /* left: 100%; */
     left: 1em;
 }
 

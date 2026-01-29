@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
 
         // posición inicial
         const pos = randomPosition(item);
-        item.style.opacity = 1;
+        item.style.opacity = 0;
         item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
 
         // detectar hover
