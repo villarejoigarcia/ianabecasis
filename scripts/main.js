@@ -43,7 +43,7 @@ window.addEventListener('load', () => {
                 setTimeout(() => {
                     const pos = randomPosition(item);
                     item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-                    item.style.opacity = 1;
+                    item.style.opacity = '';
                 }, moveDelay);
             }
 
