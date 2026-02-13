@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
 
         // posición inicial
         const pos = randomPosition(item);
-        item.style.opacity = 0;
+        item.style.opacity = 1;
         item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
 
         // detectar hover
@@ -43,7 +43,7 @@ window.addEventListener('load', () => {
                 setTimeout(() => {
                     const pos = randomPosition(item);
                     item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-                    item.style.opacity = '';
+                    item.style.opacity = 1;
                 }, moveDelay);
             }
 

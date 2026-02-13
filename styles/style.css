@@ -62,11 +62,12 @@ video {
     height: 100px;
     width: auto;
     position: absolute;
+    opacity: 0;
     transition: opacity .5s ease;
 }
 
 #feed>*.is-filtered {
-    opacity: .1;
+    opacity: .1 !important;
     pointer-events: none;
 }
 
