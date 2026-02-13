@@ -24,10 +24,10 @@ window.addEventListener('load', () => {
         item.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
 
         // detectar hover
-        if (!isMobile) {
+        // if (!isMobile) {
             item.addEventListener('mouseenter', () => { isHovered = true; });
             item.addEventListener('mouseleave', () => { isHovered = false; });
-        }
+        // }
 
         // función de animación recursiva
         function animate() {
