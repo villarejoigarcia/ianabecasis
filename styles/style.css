@@ -51,7 +51,8 @@ header>* {
     width: fit-content;
 }
 
-img {
+img,
+video {
     height: 100%;
     width: auto;
     transition: height .5s;
@@ -59,6 +60,7 @@ img {
 
 #feed>* {
     height: 100px;
+    width: auto;
     position: absolute;
     transition: opacity .5s ease;
 }
@@ -69,8 +71,16 @@ img {
 }
 
 @media (min-width:1024px) {
-    #feed>*:hover img {
+    #feed>*:hover img,
+    #feed>*:hover video {
         height: 200%;
+    }
+}
+
+@media (max-width:1024px) {
+    #feed>*:hover img,
+    #feed>*:hover video {
+        height: 300%;
     }
 }
 
